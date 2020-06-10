@@ -1,0 +1,21 @@
+server:
+  port: 9001
+spring:
+  thymeleaf:
+    enabled: true
+    cache: false
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost/loto?serverTimezone=JST
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQLDialect
+  messages:
+    basename: messages
+    cache-seconds: -1
+    encoding: UTF-8
+endpoints:
+  enabled: true

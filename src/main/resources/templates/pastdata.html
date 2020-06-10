@@ -1,0 +1,199 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<!-- <head th:replace="_temp :: header ('過去当選データ')"> -->
+<!-- </head> -->
+<head>
+	<title th:text="${title}">過去当選データ</title>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link href="/vendor/bootstrap-3.3.6/css/bootstrap.min.css" th:href="@{/vendor/bootstrap-3.3.6/css/bootstrap.min.css}" rel="stylesheet" />
+    <script src="/vendor/jquery/jquery-1.11.3.js" th:src="@{/vendor/jquery/jquery-1.11.3.js}"></script>
+    <script src="/vendor/bootstrap-3.3.6/js/bootstrap.js" th:src="@{/vendor/bootstrap-3.3.6/js/bootstrap.js}"></script>
+	<script type="text/javascript">
+		$(function(){
+			let val = $('input[name="searchType"]:checked').val();
+			if (val == 1) {
+				$('input[name="searchType"]:checked').parents('form').attr('action', '/loto6/past/dateSearch');
+			} else {
+				$('input[name="searchType"]:checked').parents('form').attr('action', '/loto6/past/timesSearch');
+			}
+			$('input[name="searchType"]:radio').change( function() {
+				let val = $(this).val();
+				if (val == 1) {
+					$(this).parents('form').attr('action', '/loto6/past/dateSearch');
+				} else {
+					$(this).parents('form').attr('action', '/loto6/past/timesSearch');
+				}
+			});
+		});
+	</script>
+</head>
+<body>
+	<div class="container">
+		<div class="page-header">
+			<h1 th:utext="#{loto6.pastdata.title}">loto6.pastdata.index.title</h1>
+			<p th:if="${emptyMessage}" th:text="${emptyMessage}">empty
+				message</p>
+			<p th:if="${errorMessage}" th:text="${errorMessage}">error
+				message</p>
+		</div>
+
+		<!--     <div th:replace="_temp :: nav"></div> -->
+
+		<div class="row">
+			<div class="col-md-6">
+				<form role="form" th:action="@{/loto6/past/dateSearch}" th:object="${pastDataForm}" method="post">
+					<div class="input-group">
+						<p>
+							<input type="radio" name="searchType"  th:field="*{searchType}" value="1" />&nbsp;<label th:for="${#ids.prev('searchType')}"  th:utext="#{loto6.pastdata.lbl1}" ></label><br>
+							<input type="text" name="searchYear" th:field="*{searchYear}" maxlength="4" size="5px" /><span th:utext="#{loto6.pastdata.lbl2}" ></span>
+							<input type="text" name="searchMonth" th:field="*{searchMonth}" maxlength="2" size="5px" /><span th:utext="#{loto6.pastdata.lbl3}" ></span>
+							<input type="text" name="searchDay"  th:field="*{searchDay}" maxlength="2" size="5px" /><span th:utext="#{loto6.pastdata.lbl4}" ></span>
+							<div th:if="${#fields.hasErrors('searchYear')}" th:errors="*{searchYear}" class="help-block">error</div>
+							<div th:if="${#fields.hasErrors('searchMonth')}" th:errors="*{searchMonth}" class="help-block">error</div>
+							<div th:if="${#fields.hasErrors('searchDay')}" th:errors="*{searchDay}" class="help-block">error</div>
+							<div th:if="${#fields.hasErrors('dateValid')}" th:errors="*{dateValid}" style="color:red;"></div>
+						</p>
+						<p>
+							<input type="radio" name="searchType" th:field="*{searchType}" value="2" />&nbsp;<label th:for="${#ids.prev('searchType')}" th:utext="#{loto6.pastdata.lbl5}" ></label><br> <span th:utext="#{loto6.pastdata.lbl6}" ></span>
+							<input type="text" name="searchTimes" th:field="*{searchTimes}" maxlength="5" size="10px" />
+							<span th:utext="#{loto6.pastdata.lbl7}" ></span>
+							<div th:if="${#fields.hasErrors('searchTimes')}" th:errors="*{searchTimes}" class="help-block">error</div>
+						</p>
+						<p class="center">
+							<select name="pages" th:field="*{pages}">
+								<option th:each="item : ${pagesItems}" th:value="${item.value}" th:text="${item.key}" />
+							</select>&nbsp;<span th:utext="#{loto6.pastdata.lbl8}" ></span>
+							<input class="btn btn-default" type="submit" th:value="#{loto6.pastdata.lbl9}" /><br>
+						</p>
+					</div>
+				</form>
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-md-12" th:each="item,iterStat : ${results}">
+
+				<table class="table">
+					<tbody>
+						<tr colspan=4>
+							<span th:with="dt = ${#dates.format(item.lotteryDate,'yyyy/MM/dd')}">
+								<span th:text="#{loto6.pastdata.times(${item.id}, ${dt})}"></span>
+							</span>
+						</tr>
+						<tr>
+							<th colspan="2" class="title"><span
+								th:utext="#{loto6.pastdata.selectNumber}"></span><br> <span
+								class="small"><span th:utext="#{loto6.pastdata.selectNumber2}"></span></span>
+							</th>
+							<th colspan="2" class="lotnum"><span th:text="${item.num1}"></span>&nbsp;
+								<span th:text="${item.num2}"></span>&nbsp; <span
+								th:text="${item.num3}"></span>&nbsp; <span
+								th:text="${item.num4}"></span>&nbsp; <span
+								th:text="${item.num5}"></span>&nbsp;<span
+								th:text="${item.num6}"></span>&nbsp;<br> (<span
+								th:text="${item.bonus}"></span>)</th>
+						</tr>
+						<tr>
+							<th rowspan="6" class="price"><span
+								th:utext="#{loto6.pastdata.prisePrice}"></span></th>
+						</tr>
+						<tr>
+							<th><span th:utext="#{loto6.pastdata.num1}"></span></th>
+							<td>
+								<div th:switch="${item.prise1Money}">
+									<span th:case="0" th:text="#{loto6.pastdata.lbl10}"></span> <span th:case="*"
+										th:text="${#numbers.formatInteger(item.prise1Money, 1, 'COMMA')} + #{loto6.pastdata.yen}"></span></span>
+								</div>
+							</td>
+							<td>
+								<div th:switch="${item.prise1Cnt}">
+									<span th:case="0" th:text="#{loto6.pastdata.lbl10}"></span> <span th:case="*"
+										th:text="${#numbers.formatInteger(item.prise1Cnt, 1, 'COMMA')} + #{loto6.pastdata.num}"></span></span>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th><span th:utext="#{loto6.pastdata.num2}"></span></th>
+							<td>
+								<div th:switch="${item.prise2Money}">
+									<span th:case="0" th:text="#{loto6.pastdata.lbl10}"></span> <span th:case="*"
+										th:text="${#numbers.formatInteger(item.prise2Money, 1, 'COMMA')} + #{loto6.pastdata.yen}"></span></span>
+								</div>
+							</td>
+							<td>
+								<div th:switch="${item.prise2Cnt}">
+									<span th:case="0" th:text="#{loto6.pastdata.lbl10}"></span> <span th:case="*"
+										th:text="${#numbers.formatInteger(item.prise2Cnt, 1, 'COMMA')} + #{loto6.pastdata.num}"></span></span>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th><span th:utext="#{loto6.pastdata.num3}"></span></th>
+							<td>
+								<div th:switch="${item.prise3Money}">
+									<span th:case="0" th:text="#{loto6.pastdata.lbl10}"></span> <span th:case="*"
+										th:text="${#numbers.formatInteger(item.prise3Money, 1, 'COMMA')} + #{loto6.pastdata.yen}"></span></span>
+								</div>
+							</td>
+							<td>
+								<div th:switch="${item.prise3Cnt}">
+									<span th:case="0" th:text="#{loto6.pastdata.lbl10}"></span> <span th:case="*"
+										th:text="${#numbers.formatInteger(item.prise3Cnt, 1, 'COMMA')} + #{loto6.pastdata.num}"></span></span>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th><span th:utext="#{loto6.pastdata.num4}"></span></th>
+							<td>
+								<div th:switch="${item.prise4Money}">
+									<span th:case="0" th:text="#{loto6.pastdata.lbl10}"></span> <span th:case="*"
+										th:text="${#numbers.formatInteger(item.prise4Money, 1, 'COMMA')} + #{loto6.pastdata.yen}"></span></span>
+								</div>
+							</td>
+							<td>
+								<div th:switch="${item.prise4Cnt}">
+									<span th:case="0" th:text="#{loto6.pastdata.lbl10}"></span> <span th:case="*"
+										th:text="${#numbers.formatInteger(item.prise4Cnt, 1, 'COMMA')} + #{loto6.pastdata.num}"></span></span>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th><span th:utext="#{loto6.pastdata.num5}"></span></th>
+							<td>
+								<div th:switch="${item.prise5Money}">
+									<span th:case="0" th:text="#{loto6.pastdata.lbl10}"></span> <span
+										th:case="*"
+										th:text="${#numbers.formatInteger(item.prise5Money, 1, 'COMMA')} + #{loto6.pastdata.yen}"></span></span>
+								</div>
+							</td>
+							<td>
+								<div th:switch="${item.prise5Cnt}">
+									<span th:case="0" th:text="#{loto6.pastdata.lbl10}"></span> <span th:case="*"
+										th:text="${#numbers.formatInteger(item.prise5Cnt, 1, 'COMMA')} + #{loto6.pastdata.num}"></span></span>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th colspan="2"><span th:utext="#{loto6.pastdata.carryover}"></span></th>
+							<td class="carryover">
+								<div th:switch="${item.carryover}">
+									<span th:case="0" th:text="#{loto6.pastdata.lbl10}"></span> <span th:case="*"
+										th:text="${#numbers.formatInteger(item.carryover, 1, 'COMMA')} + #{loto6.pastdata.yen}"></span></span>
+								</div>
+							</td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div th:replace="_temp :: footer"></div>
+	</div>
+
+<!-- 	<div th:include="_temp :: script"></div> -->
+</body>
+</html>
