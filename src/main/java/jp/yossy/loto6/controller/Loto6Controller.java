@@ -125,7 +125,7 @@ public class Loto6Controller {
 		Page<Loto6Data> results = loto6DataRepository.findByLotteryDateBeforeOrderByLotteryDateDesc(Date.from(instant),
 				PageRequest.of(0, INIT_PAGES, Sort.by(Sort.Direction.DESC, "lotteryDate")));
 
-		if (results.getSize() == 0) {
+		if (results.getContent().size() == 0) {
 			String message = msg.getMessage("loto6.list.empty", null, Locale.JAPAN);
 			model.addAttribute("emptyMessage", message);
 
@@ -149,7 +149,7 @@ public class Loto6Controller {
 		}
 
 		Page<Loto6Data> results = getResults(form);
-		if (results.getSize() == 0) {
+		if (results.getContent().size() == 0) {
 			String message = msg.getMessage("loto6.list.empty", null, Locale.JAPAN);
 			model.addAttribute("emptyMessage", message);
 		} else {
@@ -172,7 +172,7 @@ public class Loto6Controller {
 		}
 
 		Page<Loto6Data> results = getResults(form);
-		if (results.getSize() == 0) {
+		if (results.getContent().size() == 0) {
 			String message = msg.getMessage("loto6.list.empty", null, Locale.JAPAN);
 			model.addAttribute("emptyMessage", message);
 		} else {
