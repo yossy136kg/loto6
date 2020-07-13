@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<!-- <head th:replace="_temp :: header ('過去当選データ')"> -->
+<!-- </head> -->
+<head>
+	<title th:text="#{loto6.nav.csvimport}">CSVデータ取込み</title>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link href="/vendor/bootstrap-3.3.6/css/bootstrap.min.css" th:href="@{/vendor/bootstrap-3.3.6/css/bootstrap.min.css}" rel="stylesheet" />
+    <script src="/vendor/jquery/jquery-1.11.3.js" th:src="@{/vendor/jquery/jquery-1.11.3.js}"></script>
+    <script src="/vendor/bootstrap-3.3.6/js/bootstrap.js" th:src="@{/vendor/bootstrap-3.3.6/js/bootstrap.js}"></script>
+	<script type="text/javascript">
+		$(function(){
+			let val = $('input[name="searchType"]:checked').val();
+			if (val == 1) {
+				$('input[name="searchType"]:checked').parents('form').attr('action', '/loto6/past/dateSearch');
+			} else {
+				$('input[name="searchType"]:checked').parents('form').attr('action', '/loto6/past/timesSearch');
+			}
+			$('input[name="searchType"]:radio').change( function() {
+				let val = $(this).val();
+				if (val == 1) {
+					$(this).parents('form').attr('action', '/loto6/past/dateSearch');
+				} else {
+					$(this).parents('form').attr('action', '/loto6/past/timesSearch');
+				}
+			});
+		});
+	</script>
+</head>
+<body>
+	<div class="container">
+		<div th:replace="_temp :: nav"></div>
+		<div class="page-header">
+			<h1 th:utext="#{loto6.csvimport.title}"></h1>
+			<p th:if="${emptyMessage}" th:text="${emptyMessage}">empty message</p>
+			<p th:if="${errorMessage}" th:text="${errorMessage}">error message</p>
+		</div>
+
+		<div th:replace="_temp :: footer"></div>
+	</div>
+
+<!-- 	<div th:include="_temp :: script"></div> -->
+</body>
+</html>

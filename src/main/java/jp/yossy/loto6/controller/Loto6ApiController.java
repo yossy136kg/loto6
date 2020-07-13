@@ -31,7 +31,7 @@ import jp.yossy.loto6.repository.Loto6DataRepository;
 
 @RestController
 public class Loto6ApiController {
-	static final Logger logger = LoggerFactory.getLogger(Loto6Controller.class);
+	static final Logger logger = LoggerFactory.getLogger(Loto6PastDataController.class);
 
 	@Autowired
 	Loto6DataRepository loto6DataRepository;
@@ -68,7 +68,7 @@ public class Loto6ApiController {
 			return result.getAllErrors();
 		}
 		if (form.getPages() == null) {
-			form.setPages(Loto6Controller.INIT_PAGES);
+			form.setPages(Loto6PastDataController.INIT_PAGES);
 		}
 		Page<Loto6Data> results = getResults(form);
 

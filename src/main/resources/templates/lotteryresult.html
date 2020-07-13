@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<!-- <head th:replace="_temp :: header ('過去当選データ')"> -->
+<!-- </head> -->
+<head>
+	<title th:text="#{loto6.nav.index}">抽選結果確認</title>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link href="/vendor/bootstrap-3.3.6/css/bootstrap.min.css" th:href="@{/vendor/bootstrap-3.3.6/css/bootstrap.min.css}" rel="stylesheet" />
+	<link href="/style.css" th:href="@{/style.css}" rel="stylesheet" />
+    <script src="/vendor/jquery/jquery-1.11.3.js" th:src="@{/vendor/jquery/jquery-1.11.3.js}"></script>
+    <script src="/vendor/bootstrap-3.3.6/js/bootstrap.js" th:src="@{/vendor/bootstrap-3.3.6/js/bootstrap.js}"></script>
+	<script type="text/javascript">
+		$(function(){
+			let val = $('input[name="searchType"]:checked').val();
+			if (val == 1) {
+				$('input[name="searchType"]:checked').parents('form').attr('action', '/loto6/past/dateSearch');
+			} else {
+				$('input[name="searchType"]:checked').parents('form').attr('action', '/loto6/past/timesSearch');
+			}
+			$('input[name="searchType"]:radio').change( function() {
+				let val = $(this).val();
+				if (val == 1) {
+					$(this).parents('form').attr('action', '/loto6/past/dateSearch');
+				} else {
+					$(this).parents('form').attr('action', '/loto6/past/timesSearch');
+				}
+			});
+		});
+	</script>
+</head>
+<body>
+	<div class="container">
+		<div th:replace="_temp :: nav"></div>
+		<div class="page-header">
+			<h1 th:utext="#{loto6.index.title}"></h1>
+			<p th:if="${emptyMessage}" th:text="${emptyMessage}">empty message</p>
+			<p th:if="${errorMessage}" th:text="${errorMessage}">error message</p>
+		</div>
+
+		<p>調べたいロト６抽せん番号を入力してからスタートをクリックしてください</p>
+		<p>※第<label th:text="${lotteryResultForm.minId}"></label>回(<label th:text="${lotteryResultForm.minLotteryDate}"></label>) ～ 第<label th:text="${lotteryResultForm.maxId}"></label>回(<label th:text="${lotteryResultForm.maxLotteryDate}"></label>)</p>
+		<div class="number-input">
+			<p>
+				<button type="button" name="" value="" id="01">01</button>
+				<button type="button" name="" value="" id="02">02</button>
+				<button type="button" name="" value="" id="03">03</button>
+				<button type="button" name="" value="" id="04">04</button>
+				<button type="button" name="" value="" id="05">05</button>
+				<button type="button" name="" value="" id="06">06</button>
+				<button type="button" name="" value="" id="07">07</button>
+				<button type="button" name="" value="" id="08">08</button>
+				<button type="button" name="" value="" id="09">09</button>
+				<button type="button" name="" value="" id="10">10</button>
+				<button type="button" name="" value="" id="11">11</button>
+				<button type="button" name="" value="" id="12">12</button>
+				<button type="button" name="" value="" id="13">13</button>
+				<button type="button" name="" value="" id="14">14</button>
+				<button type="button" name="" value="" id="15">15</button>
+				<button type="button" name="" value="" id="16">16</button>
+				<button type="button" name="" value="" id="17">17</button>
+				<button type="button" name="" value="" id="18">18</button>
+				<button type="button" name="" value="" id="19">19</button>
+				<button type="button" name="" value="" id="20">20</button>
+				<button type="button" name="" value="" id="21">21</button>
+				<button type="button" name="" value="" id="22">22</button>
+				<button type="button" name="" value="" id="23">23</button>
+				<button type="button" name="" value="" id="24">24</button>
+				<button type="button" name="" value="" id="25">25</button>
+				<button type="button" name="" value="" id="26">26</button>
+				<button type="button" name="" value="" id="27">27</button>
+				<button type="button" name="" value="" id="28">28</button>
+				<button type="button" name="" value="" id="29">29</button>
+				<button type="button" name="" value="" id="30">30</button>
+				<button type="button" name="" value="" id="31">31</button>
+				<button type="button" name="" value="" id="32">32</button>
+				<button type="button" name="" value="" id="33">33</button>
+				<button type="button" name="" value="" id="34">34</button>
+				<button type="button" name="" value="" id="35">35</button>
+				<button type="button" name="" value="" id="36">36</button>
+				<button type="button" name="" value="" id="37">37</button>
+				<button type="button" name="" value="" id="38">38</button>
+				<button type="button" name="" value="" id="39">39</button>
+				<button type="button" name="" value="" id="40">40</button>
+				<button type="button" name="" value="" id="41">41</button>
+				<button type="button" name="" value="" id="42">42</button>
+				<button type="button" name="" value="" id="43">43</button>
+			</p>
+			<p>
+				<a href="" class="button2" id="start-button">スタート</a>
+				<a href="" class="button4" id="clear-button">クリア</a>
+			</p>
+		</div>
+
+		<div th:replace="_temp :: footer"></div>
+	</div>
+
+<!-- 	<div th:include="_temp :: script"></div> -->
+</body>
+</html>

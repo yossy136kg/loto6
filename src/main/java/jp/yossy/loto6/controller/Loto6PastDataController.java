@@ -4,7 +4,6 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -42,8 +41,8 @@ import jp.yossy.loto6.repository.Loto6DataRepository;
 
 @Controller
 @RequestMapping("loto6")
-public class Loto6Controller {
-	static final Logger logger = LoggerFactory.getLogger(Loto6Controller.class);
+public class Loto6PastDataController {
+	static final Logger logger = LoggerFactory.getLogger(Loto6PastDataController.class);
 
 	static final int INIT_PAGES = 10;
 
@@ -121,10 +120,7 @@ public class Loto6Controller {
 
 		model.addAttribute("pagesItems", PAGES_ITEMS);
 
-		Instant instant = ZonedDateTime.of(now.truncatedTo(ChronoUnit.DAYS), ZoneId.systemDefault()).toInstant();
-		Page<Loto6Data> results = loto6DataRepository.findByLotteryDateBeforeOrderByLotteryDateDesc(Date.from(instant),
-				PageRequest.of(0, INIT_PAGES, Sort.by(Sort.Direction.DESC, "lotteryDate")));
-
+		Page<Loto6Data> results = getResults(form);
 		if (results.getContent().size() == 0) {
 			String message = msg.getMessage("loto6.list.empty", null, Locale.JAPAN);
 			model.addAttribute("emptyMessage", message);

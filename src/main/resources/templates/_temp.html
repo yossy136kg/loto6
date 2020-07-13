@@ -14,12 +14,14 @@
     <div th:fragment="nav" class="row">
       <div class="col-md-12">
         <ul class="nav nav-pills">
-          <li role="presentation"><a href="/loto6" th:href="@{/loto6}" th:utext="#{loto6.nav.index}">index</a></li>
+          <li role="presentation"><a th:href="@{/loto6}" th:utext="#{loto6.nav.index}">抽選結果確認</a></li>
+          <li role="presentation"><a th:href="@{/loto6/past}" th:utext="#{loto6.nav.pastdata}">過去の抽せん結果</a></li>
+          <li role="presentation"><a th:href="@{/loto6/csvimport}" th:utext="#{loto6.nav.csvimport}">CSVデータ取込み</a></li>
         </ul>
       </div>
     </div>
 
-    <div th:fragment="footer" class="page-header">
+    <div th:fragment="footer" class="footer-copyright text-center py-3">
       <div th:utext="#{footer.text}">original footer</div>
     </div>
 

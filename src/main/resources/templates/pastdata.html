@@ -4,7 +4,7 @@
 <!-- <head th:replace="_temp :: header ('過去当選データ')"> -->
 <!-- </head> -->
 <head>
-	<title th:text="${title}">過去当選データ</title>
+	<title th:text="#{loto6.nav.pastdata}">過去当選データ</title>
 	<meta charset="UTF-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -32,15 +32,12 @@
 </head>
 <body>
 	<div class="container">
+		<div th:replace="_temp :: nav"></div>
 		<div class="page-header">
-			<h1 th:utext="#{loto6.pastdata.title}">loto6.pastdata.index.title</h1>
-			<p th:if="${emptyMessage}" th:text="${emptyMessage}">empty
-				message</p>
-			<p th:if="${errorMessage}" th:text="${errorMessage}">error
-				message</p>
+			<h1 th:utext="#{loto6.pastdata.title}"></h1>
+			<p th:if="${emptyMessage}" th:text="${emptyMessage}">empty message</p>
+			<p th:if="${errorMessage}" th:text="${errorMessage}">error message</p>
 		</div>
-
-		<!--     <div th:replace="_temp :: nav"></div> -->
 
 		<div class="row">
 			<div class="col-md-6">

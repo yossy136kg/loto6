@@ -10,6 +10,7 @@ MySQL 5.6
 
 
 サンプルデータは下記の通り準備します。
+URL:https://loto6.thekyo.jp/download/index
 データベース: loto
 ユーザー： root
 テーブル: loto6_data

@@ -16,7 +16,7 @@ import lombok.Data;
 @Data
 public class PastDataForm implements Serializable {
 
-	private static final long serialVersionUID = 1330043957072942381L;
+	private static final long serialVersionUID = 1330043957072942382L;
 
 	public static interface DateSearch {
     };

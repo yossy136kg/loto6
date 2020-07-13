@@ -1,0 +1,53 @@
+.container .number-input {
+    margin: 0 0 20px;
+    padding: 0;
+    text-align: center;
+}
+.container .number-input button {
+    display: inline-block;
+    background: linear-gradient(#e9e9e9, #c3c3c3);
+    margin: 5px 2px;
+    padding: 10px 20px;
+    border: #bbb 1px solid;
+    border-radius: 5px;
+    text-align: center;
+}
+.container .number-input .button2, .container .number-input .button4 {
+    width: 200px;
+    max-width: 40%;
+    font-size: 1em;
+}
+.container .button2 {
+    display: inline-block;
+    width: 250px;
+    margin: 0 5px 20px;
+    padding: 15px;
+    color: #fff;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+    border: #af1d00 1px solid;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+    background: linear-gradient(#ff8e7f, #dd240c);
+}
+
+.container .button4 {
+    display: inline-block;
+    width: 200px;
+    margin: 0 5px 20px;
+    padding: 15px;
+    color: #fff;
+    font-size: 1em;
+    font-weight: bold;
+    text-align: center;
+    border: #016d9c 1px solid;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+    background: linear-gradient(#80d5fe, #0c78da);
+}
+
+.container .number-input button.on {
+    background: linear-gradient(#febe70, #fd7a05);
+    color: #fff;
+}
+
