@@ -36,5 +36,10 @@ CREATE TABLE `loto6_data` (
   `prise4_money` int(11) NOT NULL,
   `prise5_money` int(11) NOT NULL,
   `carryover` int(11) NOT NULL,
+  `check_num` char(27) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1264 DEFAULT CHARSET=utf8mb4
+) ENGINE=InnoDB AUTO_INCREMENT=1499 DEFAULT CHARSET=utf8mb4
+
+update loto6_data set check_num = concat('_', LPAD(`num1`, 2, '0'),'_', LPAD(`num2`, 2, '0'),'_', LPAD(`num3`, 2, '0'),'_', LPAD(`num4`, 2, '0'),'_', LPAD(`num5`, 2, '0'),'_', LPAD(`num6`, 2, '0'),'_', LPAD(`bonus`, 2, '0'));
+
+

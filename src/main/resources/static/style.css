@@ -12,6 +12,10 @@
     border-radius: 5px;
     text-align: center;
 }
+.container .number-input button.on {
+    background: linear-gradient(#febe70, #fd7a05);
+    color: #fff;
+}
 .container .number-input .button2, .container .number-input .button4 {
     width: 200px;
     max-width: 40%;
