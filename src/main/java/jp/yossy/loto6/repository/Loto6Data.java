@@ -16,66 +16,59 @@ public class Loto6Data implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
 	private int id;
 
-	@Column(nullable=false)
 	private int bonus;
 
-	@Column(nullable=false)
 	private int carryover;
+
+	@Column(name="check_num")
+	private String checkNum;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="lottery_date")
 	private Date lotteryDate;
 
-	@Column(nullable=false)
 	private int num1;
 
-	@Column(nullable=false)
 	private int num2;
 
-	@Column(nullable=false)
 	private int num3;
 
-	@Column(nullable=false)
 	private int num4;
 
-	@Column(nullable=false)
 	private int num5;
 
-	@Column(nullable=false)
 	private int num6;
 
-	@Column(name="prise1_cnt", nullable=false)
+	@Column(name="prise1_cnt")
 	private int prise1Cnt;
 
-	@Column(name="prise1_money", nullable=false)
+	@Column(name="prise1_money")
 	private int prise1Money;
 
-	@Column(name="prise2_cnt", nullable=false)
+	@Column(name="prise2_cnt")
 	private int prise2Cnt;
 
-	@Column(name="prise2_money", nullable=false)
+	@Column(name="prise2_money")
 	private int prise2Money;
 
-	@Column(name="prise3_cnt", nullable=false)
+	@Column(name="prise3_cnt")
 	private int prise3Cnt;
 
-	@Column(name="prise3_money", nullable=false)
+	@Column(name="prise3_money")
 	private int prise3Money;
 
-	@Column(name="prise4_cnt", nullable=false)
+	@Column(name="prise4_cnt")
 	private int prise4Cnt;
 
-	@Column(name="prise4_money", nullable=false)
+	@Column(name="prise4_money")
 	private int prise4Money;
 
-	@Column(name="prise5_cnt", nullable=false)
+	@Column(name="prise5_cnt")
 	private int prise5Cnt;
 
-	@Column(name="prise5_money", nullable=false)
+	@Column(name="prise5_money")
 	private int prise5Money;
 
 	public Loto6Data() {
@@ -103,6 +96,14 @@ public class Loto6Data implements Serializable {
 
 	public void setCarryover(int carryover) {
 		this.carryover = carryover;
+	}
+
+	public String getCheckNum() {
+		return this.checkNum;
+	}
+
+	public void setCheckNum(String checkNum) {
+		this.checkNum = checkNum;
 	}
 
 	public Date getLotteryDate() {

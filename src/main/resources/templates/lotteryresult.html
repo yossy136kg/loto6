@@ -14,20 +14,55 @@
     <script src="/vendor/bootstrap-3.3.6/js/bootstrap.js" th:src="@{/vendor/bootstrap-3.3.6/js/bootstrap.js}"></script>
 	<script type="text/javascript">
 		$(function(){
-			let val = $('input[name="searchType"]:checked').val();
-			if (val == 1) {
-				$('input[name="searchType"]:checked').parents('form').attr('action', '/loto6/past/dateSearch');
-			} else {
-				$('input[name="searchType"]:checked').parents('form').attr('action', '/loto6/past/timesSearch');
-			}
-			$('input[name="searchType"]:radio').change( function() {
-				let val = $(this).val();
-				if (val == 1) {
-					$(this).parents('form').attr('action', '/loto6/past/dateSearch');
+			$('button[name^=id]').on('click', function() {
+				$('#error_msg').empty();
+				let cnt = $('button[name^=id][class=on]').size();
+				if ($(this).attr('class')) {
+					$(this).removeAttr('class');
 				} else {
-					$(this).parents('form').attr('action', '/loto6/past/timesSearch');
+					if ((cnt) == 6) {
+						// 入力する数字は６つまでです
+						$('#error_msg').append('<p style=\'color:red;\'>入力する数字は６つまでです</p>');
+						return false;
+					}
+					$(this).attr('class', 'on');
 				}
 			});
+			$('#start-button').on('click', function() {
+				$('#error_msg').empty();
+				let cnt = $('button[name^=id][class=on]').size();
+				if (cnt<=2) {
+					// 抽せん数字は３つ以上入力してください
+					$('#error_msg').append('<p style=\'color:red;\'>抽せん数字は３つ以上入力してください</p>');
+					return false;
+				}
+				let slctVal = '';
+				$('button[name^=id][class=on]').each(function(i, elem) {
+					slctVal += '_' + $(elem).attr('id');
+				});
+
+				var resurl = location.href.replace(/\?.*$/,"") + "/api/resultcofirm";
+
+				$.ajax(resurl, {
+					type: 'GET',
+					dataType: 'json',
+					data: { slctVal : slctVal},
+					timeout: 5000,
+
+				})
+				.done(function(data) {
+					alert(data);
+				})
+				.fail(function(data) {
+					alert("error");
+				});
+
+			})
+			$('#clear-button').on('click', function() {
+				$('#error_msg').empty();
+				$('button[name^=id][class=on]').removeAttr('class');
+				return false;
+			})
 		});
 	</script>
 </head>
@@ -42,55 +77,57 @@
 
 		<p>調べたいロト６抽せん番号を入力してからスタートをクリックしてください</p>
 		<p>※第<label th:text="${lotteryResultForm.minId}"></label>回(<label th:text="${lotteryResultForm.minLotteryDate}"></label>) ～ 第<label th:text="${lotteryResultForm.maxId}"></label>回(<label th:text="${lotteryResultForm.maxLotteryDate}"></label>)</p>
+		<div id="error_msg">
+		</div>
 		<div class="number-input">
 			<p>
-				<button type="button" name="" value="" id="01">01</button>
-				<button type="button" name="" value="" id="02">02</button>
-				<button type="button" name="" value="" id="03">03</button>
-				<button type="button" name="" value="" id="04">04</button>
-				<button type="button" name="" value="" id="05">05</button>
-				<button type="button" name="" value="" id="06">06</button>
-				<button type="button" name="" value="" id="07">07</button>
-				<button type="button" name="" value="" id="08">08</button>
-				<button type="button" name="" value="" id="09">09</button>
-				<button type="button" name="" value="" id="10">10</button>
-				<button type="button" name="" value="" id="11">11</button>
-				<button type="button" name="" value="" id="12">12</button>
-				<button type="button" name="" value="" id="13">13</button>
-				<button type="button" name="" value="" id="14">14</button>
-				<button type="button" name="" value="" id="15">15</button>
-				<button type="button" name="" value="" id="16">16</button>
-				<button type="button" name="" value="" id="17">17</button>
-				<button type="button" name="" value="" id="18">18</button>
-				<button type="button" name="" value="" id="19">19</button>
-				<button type="button" name="" value="" id="20">20</button>
-				<button type="button" name="" value="" id="21">21</button>
-				<button type="button" name="" value="" id="22">22</button>
-				<button type="button" name="" value="" id="23">23</button>
-				<button type="button" name="" value="" id="24">24</button>
-				<button type="button" name="" value="" id="25">25</button>
-				<button type="button" name="" value="" id="26">26</button>
-				<button type="button" name="" value="" id="27">27</button>
-				<button type="button" name="" value="" id="28">28</button>
-				<button type="button" name="" value="" id="29">29</button>
-				<button type="button" name="" value="" id="30">30</button>
-				<button type="button" name="" value="" id="31">31</button>
-				<button type="button" name="" value="" id="32">32</button>
-				<button type="button" name="" value="" id="33">33</button>
-				<button type="button" name="" value="" id="34">34</button>
-				<button type="button" name="" value="" id="35">35</button>
-				<button type="button" name="" value="" id="36">36</button>
-				<button type="button" name="" value="" id="37">37</button>
-				<button type="button" name="" value="" id="38">38</button>
-				<button type="button" name="" value="" id="39">39</button>
-				<button type="button" name="" value="" id="40">40</button>
-				<button type="button" name="" value="" id="41">41</button>
-				<button type="button" name="" value="" id="42">42</button>
-				<button type="button" name="" value="" id="43">43</button>
+				<button type="button" name="id01" value="" id="01">01</button>
+				<button type="button" name="id02" value="" id="02">02</button>
+				<button type="button" name="id03" value="" id="03">03</button>
+				<button type="button" name="id04" value="" id="04">04</button>
+				<button type="button" name="id05" value="" id="05">05</button>
+				<button type="button" name="id06" value="" id="06">06</button>
+				<button type="button" name="id07" value="" id="07">07</button>
+				<button type="button" name="id08" value="" id="08">08</button>
+				<button type="button" name="id09" value="" id="09">09</button>
+				<button type="button" name="id10" value="" id="10">10</button>
+				<button type="button" name="id11" value="" id="11">11</button>
+				<button type="button" name="id12" value="" id="12">12</button>
+				<button type="button" name="id13" value="" id="13">13</button>
+				<button type="button" name="id14" value="" id="14">14</button>
+				<button type="button" name="id15" value="" id="15">15</button>
+				<button type="button" name="id16" value="" id="16">16</button>
+				<button type="button" name="id17" value="" id="17">17</button>
+				<button type="button" name="id18" value="" id="18">18</button>
+				<button type="button" name="id19" value="" id="19">19</button>
+				<button type="button" name="id20" value="" id="20">20</button>
+				<button type="button" name="id21" value="" id="21">21</button>
+				<button type="button" name="id22" value="" id="22">22</button>
+				<button type="button" name="id23" value="" id="23">23</button>
+				<button type="button" name="id24" value="" id="24">24</button>
+				<button type="button" name="id25" value="" id="25">25</button>
+				<button type="button" name="id26" value="" id="26">26</button>
+				<button type="button" name="id27" value="" id="27">27</button>
+				<button type="button" name="id28" value="" id="28">28</button>
+				<button type="button" name="id29" value="" id="29">29</button>
+				<button type="button" name="id30" value="" id="30">30</button>
+				<button type="button" name="id31" value="" id="31">31</button>
+				<button type="button" name="id32" value="" id="32">32</button>
+				<button type="button" name="id33" value="" id="33">33</button>
+				<button type="button" name="id34" value="" id="34">34</button>
+				<button type="button" name="id35" value="" id="35">35</button>
+				<button type="button" name="id36" value="" id="36">36</button>
+				<button type="button" name="id37" value="" id="37">37</button>
+				<button type="button" name="id38" value="" id="38">38</button>
+				<button type="button" name="id39" value="" id="39">39</button>
+				<button type="button" name="id40" value="" id="40">40</button>
+				<button type="button" name="id41" value="" id="41">41</button>
+				<button type="button" name="id42" value="" id="42">42</button>
+				<button type="button" name="id43" value="" id="43">43</button>
 			</p>
 			<p>
-				<a href="" class="button2" id="start-button">スタート</a>
-				<a href="" class="button4" id="clear-button">クリア</a>
+				<a class="button2" id="start-button">スタート</a>
+				<a class="button4" id="clear-button">クリア</a>
 			</p>
 		</div>
 

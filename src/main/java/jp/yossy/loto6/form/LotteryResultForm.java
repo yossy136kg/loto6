@@ -16,6 +16,4 @@ public class LotteryResultForm implements Serializable {
 	private String minLotteryDate;
 
 	private String maxLotteryDate;
-
-
 }

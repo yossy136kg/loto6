@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface Loto6DataRepository extends JpaRepository<Loto6Data, Integer> {
-
 	public Page<Loto6Data> findByLotteryDateBeforeOrderByLotteryDateDesc(Date lotteryDate, Pageable pages);
 
 	public Page<Loto6Data> findByIdLessThanEqualOrderByLotteryDateDesc(Integer times, Pageable pages);
@@ -26,4 +25,6 @@ public interface Loto6DataRepository extends JpaRepository<Loto6Data, Integer> {
 
 	@Query(value="SELECT MAX(lotteryDate) FROM Loto6Data")
 	public Date maxLotteryDate();
+
+
 }

@@ -75,7 +75,6 @@ public class Loto6LotteryResultConfirmController {
 		SimpleDateFormat fm = new SimpleDateFormat("yyyy年MM月dd日");
 		form.setMinLotteryDate(fm.format(minLotteryDate));
 		form.setMaxLotteryDate(fm.format(maxLotteryDate));
-
 		return "lotteryresult";
 	}
 }
