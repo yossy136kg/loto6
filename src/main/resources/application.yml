@@ -6,16 +6,13 @@ spring:
     cache: false
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost/loto?serverTimezone=JST
-    username: root
-    password: root
+    url: jdbc:mysql://localhost/loto?serverTimezone=JST&useSSL=false&characterEncoding=UTF-8
+    username: test_user
+    password: test_user
   jpa:
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.dialect.MySQLDialect
   messages:
     basename: messages
-    cache-seconds: -1
     encoding: UTF-8
-endpoints:
-  enabled: true

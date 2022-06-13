@@ -14,7 +14,11 @@ URL:https://loto6.thekyo.jp/download/index
 データベース: loto
 ユーザー： root
 テーブル: loto6_data
+
+
 create database if not exists loto;
+create user 'test_user'@'localhost' identified by 'test_user';
+grant all on loto.* to 'test_user'@'localhost';
 CREATE TABLE `loto6_data` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `lottery_date` date DEFAULT NULL,
